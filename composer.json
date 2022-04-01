@@ -15,6 +15,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "lwwcas/laravel-countries": "^3.1",
         "spresnac/laravel-create-user-cli": "^1.0"
     },
     "require-dev": {
