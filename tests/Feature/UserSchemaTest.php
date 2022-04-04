@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Country;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Schema;
@@ -41,5 +42,31 @@ class UserSchemaTest extends TestCase
         $user = User::factory()->create();
 
         $this->assertModelExists($user);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_user_belongs_to_country()
+    {
+        $country = Country::factory()->create();
+        $user = User::factory()
+            ->for($country)
+            ->create();
+
+        $this->assertInstanceOf(Country::class, $user->country);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_user_can_get_country_name()
+    {
+        $country = Country::factory()->create();
+        $user = User::factory()
+            ->for($country)
+            ->create();
+
+        $this->assertEquals($country->name, $user->country->name);
     }
 }

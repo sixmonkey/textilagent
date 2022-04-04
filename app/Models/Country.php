@@ -16,5 +16,8 @@ class Country extends Model
      *
      * @var string[]
      */
-    public $translatable = ['name', 'official_name'];
+    public $translatable = [
+        'name',
+        'official_name'
+    ];
 }
