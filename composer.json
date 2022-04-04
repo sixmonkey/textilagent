@@ -56,6 +56,7 @@
             "post-merge": "composer install",
             "pre-commit": [
                 "php artisan fixer:fix --dry-run --stop-on-violation .",
+                "php artisan test",
                 "composer normalize",
                 "php artisan envy:sync --force"
             ],
@@ -76,9 +77,9 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan envy:sync --force",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta",
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan envy:sync --force",
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:generate",
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:meta",
             "[ $COMPOSER_DEV_MODE -eq 0 ] || cghooks update"
         ],
         "post-autoload-dump": [
