@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Lwwcas\LaravelCountries\Database\Seeders\LcDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(LcDatabaseSeeder::class);
+        $this->call(CountrySeeder::class);
     }
 }

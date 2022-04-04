@@ -15,8 +15,10 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "lwwcas/laravel-countries": "^3.1",
-        "spresnac/laravel-create-user-cli": "^1.0"
+        "pragmarx/countries": "0.7.2",
+        "spatie/laravel-translatable": "^5",
+        "spresnac/laravel-create-user-cli": "^1.0",
+        "whitecube/lingua": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
