@@ -15,7 +15,10 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "spresnac/laravel-create-user-cli": "^1.0"
+        "pragmarx/countries": "0.7.2",
+        "spatie/laravel-translatable": "^5",
+        "spresnac/laravel-create-user-cli": "^1.0",
+        "whitecube/lingua": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
@@ -55,6 +58,7 @@
             "post-merge": "composer install",
             "pre-commit": [
                 "php artisan fixer:fix --dry-run --stop-on-violation .",
+                "php artisan test",
                 "composer normalize",
                 "php artisan envy:sync --force"
             ],
@@ -75,9 +79,9 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan envy:sync --force",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta",
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan envy:sync --force",
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:generate",
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:meta",
             "[ $COMPOSER_DEV_MODE -eq 0 ] || cghooks update"
         ],
         "post-autoload-dump": [
