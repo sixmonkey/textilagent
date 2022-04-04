@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasCountry;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends AuthUser
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use HasCountry;
 
     /**
      * The attributes that are mass assignable.
@@ -41,13 +44,5 @@ class User extends AuthUser
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * @return BelongsTo
-     */
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
-    }
 
 }
