@@ -22,8 +22,8 @@ class OrderItemFactory extends Factory
             'typology' => $this->faker->text(20),
             'amount' => $this->faker->numberBetween(100, 1000),
             'etd' => $this->faker->date,
-            'price' => $this->faker->randomFloat(25),
-            'provision' => $this->faker->randomFloat(10, 30),
+            'price' => $this->faker->randomFloat(2, 10, 100),
+            'provision' => $this->faker->randomFloat(2, 10,30),
         ];
     }
 }

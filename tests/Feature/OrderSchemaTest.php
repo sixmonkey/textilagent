@@ -2,8 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\Company;
 use App\Models\Currency;
 use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Schema;
 use Tests\TestCase;
@@ -53,5 +57,58 @@ class OrderSchemaTest extends TestCase
             ->create();
 
         $this->assertInstanceOf(Currency::class, $order->currency);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_order_belongs_to_agent()
+    {
+        $user = User::factory()->create();
+        $order = Order::factory()
+            ->for($user, 'agent')
+            ->create();
+
+        $this->assertInstanceOf(User::class, $order->agent);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_order_belongs_to_supplier()
+    {
+        $company = Company::factory()->create();
+        $order = Order::factory()
+            ->for($company, 'supplier')
+            ->create();
+
+        $this->assertInstanceOf(Company::class, $order->supplier);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_order_belongs_to_customer()
+    {
+        $company = Company::factory()->create();
+        $order = Order::factory()
+            ->for($company, 'customer')
+            ->create();
+
+        $this->assertInstanceOf(Company::class, $order->customer);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_order_has_order_items()
+    {
+        $order = Order::factory()
+            ->hasOrderItems(3)
+            ->create();
+
+        $this->assertEquals(3, $order->orderItems->count());
+
+        $this->assertInstanceOf(Collection::class, $order->orderItems);
     }
 }
