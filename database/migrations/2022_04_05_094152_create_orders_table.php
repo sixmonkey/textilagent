@@ -23,10 +23,10 @@ class CreateOrdersTable extends Migration
             $table->date('date')->comment('the date on the contract');
             $table->boolean('customer_pays')->default(false)->comment('customer pays provision');
             $table->boolean('completed')->default(false)->comment('order is finished');
-            $table->foreignIdFor(User::class, 'agent_id')->comment('main agent for the order');
-            $table->foreignIdFor(Company::class, 'supplier_id')->comment('supplier for the order');
-            $table->foreignIdFor(Company::class, 'customer_id')->comment('supplier of the order');
-            $table->foreignIdFor(Currency::class)->comment('currency of the order');
+            $table->foreignIdFor(User::class, 'agent_id')->constrained('users')->cascadeOnDelete()->comment('main agent for the order');
+            $table->foreignIdFor(Company::class, 'supplier_id')->constrained('companies')->cascadeOnDelete()->comment('supplier for the order');
+            $table->foreignIdFor(Company::class, 'customer_id')->constrained('companies')->cascadeOnDelete()->comment('supplier of the order');
+            $table->foreignIdFor(Currency::class)->constrained('currencies')->cascadeOnDelete()->comment('currency of the order');
 
             $table->timestamps();
         });
