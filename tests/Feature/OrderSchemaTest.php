@@ -111,4 +111,26 @@ class OrderSchemaTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $order->orderItems);
     }
+
+    /**
+     * the total value of this order
+     *
+     * @return void
+     */
+    public function test_order_total_attribute()
+    {
+        $order = Order::factory()->create();
+
+        $this->assertEquals(0, $order->total);
+
+        $order = Order::factory()
+            ->hasOrderItems(5, [
+                'amount' => 10,
+                'price' => 10,
+            ])
+            ->create();
+
+        $this->assertEquals(500, $order->total);
+
+    }
 }

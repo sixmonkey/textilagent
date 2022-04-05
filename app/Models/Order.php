@@ -11,6 +11,10 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $appends = [
+        'total'
+    ];
+
     /**
      * the related currency
      *
@@ -59,5 +63,14 @@ class Order extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getTotalAttribute()
+    {
+        return (float)$this->orderItems()->selectRaw('sum(order_items.amount * order_items.price) as total_value')->first('total_value')->total_value;
     }
 }
