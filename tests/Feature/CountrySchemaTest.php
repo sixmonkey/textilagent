@@ -31,7 +31,8 @@ class CountrySchemaTest extends TestCase
                 'calling_code',
                 'tld',
                 'emoji',
-            ]));
+            ])
+        );
     }
 
     /**
