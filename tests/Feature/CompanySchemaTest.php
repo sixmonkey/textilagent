@@ -27,7 +27,8 @@ class CompanySchemaTest extends TestCase
                 'phone',
                 'address',
                 'country_id',
-            ]), 1);
+            ])
+        );
     }
 
     /**
