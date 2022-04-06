@@ -2,6 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Company;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Shipment;
 use App\Models\ShipmentItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -37,5 +41,31 @@ class ShipmentItemSchemaTest extends TestCase
         $shipmentItem = ShipmentItem::factory()->create();
 
         $this->assertModelExists($shipmentItem);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_shipped_item_belongs_to_order_item()
+    {
+        $orderItem = OrderItem::factory()->create();
+        $shippedItem = ShipmentItem::factory()
+            ->for($orderItem)
+            ->create();
+
+        $this->assertInstanceOf(OrderItem::class, $shippedItem->orderItem);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_shipped_item_belongs_to_shipment()
+    {
+        $shipment = Shipment::factory()->create();
+        $shippedItem = ShipmentItem::factory()
+            ->for($shipment)
+            ->create();
+
+        $this->assertInstanceOf(Shipment::class, $shippedItem->shipment);
     }
 }
