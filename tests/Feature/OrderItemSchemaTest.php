@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Schema;
 use Tests\TestCase;
 
@@ -68,5 +69,17 @@ class OrderItemSchemaTest extends TestCase
             ->create();
 
         $this->assertInstanceOf(Unit::class, $orderItem->unit);
+    }
+
+    /**
+     * the etd of this item
+     *
+     * @return void
+     */
+    public function test_order_item_etd()
+    {
+        $orderItem = OrderItem::factory()->create();
+
+        $this->assertInstanceOf(Carbon::class, $orderItem->etd);
     }
 }

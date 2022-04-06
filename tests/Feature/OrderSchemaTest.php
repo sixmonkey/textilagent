@@ -5,10 +5,10 @@ namespace Tests\Feature;
 use App\Models\Company;
 use App\Models\Currency;
 use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Schema;
 use Tests\TestCase;
 
@@ -131,6 +131,17 @@ class OrderSchemaTest extends TestCase
             ->create();
 
         $this->assertEquals(500, $order->total);
+    }
 
+    /**
+     * the date of this order
+     *
+     * @return void
+     */
+    public function test_order_date()
+    {
+        $order = Order::factory()->create();
+
+        $this->assertInstanceOf(Carbon::class, $order->date);
     }
 }

@@ -15,6 +15,8 @@ class CreateShipmentsTable extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
+            $table->date('date')->comment('date of this shipment');
+            $table->string('invoice')->nullable()->comment('unique invoice number by supplier');
             $table->timestamps();
         });
     }

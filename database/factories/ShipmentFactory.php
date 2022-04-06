@@ -11,10 +11,11 @@ class ShipmentFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            //
+            'date' => $this->faker->date,
+            'invoice' => '#' . strtoupper($this->faker->randomLetter) . '-' . $this->faker->numberBetween(1111, 9999),
         ];
     }
 }
