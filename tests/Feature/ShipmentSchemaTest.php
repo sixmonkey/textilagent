@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\OrderItem;
 use App\Models\Shipment;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Schema;
@@ -38,6 +40,20 @@ class ShipmentSchemaTest extends TestCase
         $this->assertModelExists($shipment);
     }
 
+
+    /**
+     * @return void
+     */
+    public function test_shipment_has_shipment_items()
+    {
+        $shipment = Shipment::factory()
+            ->hasShipmentItems(3)
+            ->create();
+
+        $this->assertEquals(3, $shipment->shipmentItems->count());
+
+        $this->assertInstanceOf(Collection::class, $shipment->shipmentItems);
+    }
     /**
      * the date of this shipment
      *

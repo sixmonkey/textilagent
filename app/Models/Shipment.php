@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shipment extends Model
 {
@@ -17,4 +18,14 @@ class Shipment extends Model
     protected $casts = [
         'date' => 'date',
     ];
+
+    /**
+     * related shipment items
+     *
+     * @return HasMany
+     */
+    public function shipmentItems(): HasMany
+    {
+        return $this->hasMany(ShipmentItem::class);
+    }
 }
