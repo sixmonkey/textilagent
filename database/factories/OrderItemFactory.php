@@ -23,7 +23,7 @@ class OrderItemFactory extends Factory
             'amount' => $this->faker->numberBetween(100, 1000),
             'etd' => $this->faker->date,
             'price' => $this->faker->randomFloat(2, 10, 100),
-            'provision' => $this->faker->randomFloat(2, 10,30),
+            'provision' => $this->faker->randomFloat(2, 10, 30),
         ];
     }
 }

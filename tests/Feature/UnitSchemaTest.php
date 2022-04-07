@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class UnitSchemaTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -22,7 +21,9 @@ class UnitSchemaTest extends TestCase
             Schema::hasColumns('units', [
                 'id',
                 'code',
-            ]), 1);
+            ]),
+            1
+        );
     }
 
     /**

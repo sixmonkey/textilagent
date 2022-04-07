@@ -18,17 +18,22 @@
         "pragmarx/countries": "0.7.2",
         "spatie/laravel-translatable": "^5",
         "spresnac/laravel-create-user-cli": "^1.0",
+        "staudenmeir/belongs-to-through": "^2.11",
+        "staudenmeir/eloquent-has-many-deep": "^1.14",
         "whitecube/lingua": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
+        "brianium/paratest": "^6.4",
         "ergebnis/composer-normalize": "^2.25",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^v3.8",
         "laravel/sail": "^1.13",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
         "phpunit/phpunit": "^9.5.10",
+        "stechstudio/laravel-php-cs-fixer": "^3.1",
         "worksome/envy": "^0.3.1"
     },
     "minimum-stability": "dev",
@@ -58,7 +63,7 @@
             "post-merge": "composer install",
             "pre-commit": [
                 "php artisan fixer:fix --dry-run --stop-on-violation .",
-                "php artisan test",
+                "php artisan test --parallel --stop-on-failure",
                 "composer normalize",
                 "php artisan envy:sync --force"
             ],

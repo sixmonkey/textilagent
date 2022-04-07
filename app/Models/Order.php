@@ -6,13 +6,31 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Order extends Model
 {
     use HasFactory;
+    use HasRelationships;
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var string[]
+     */
     protected $appends = [
         'total'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'date' => 'date',
     ];
 
     /**
@@ -65,6 +83,28 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    /**
+     * the related shipment items
+     *
+     * @return HasManyThrough
+     */
+    public function shipmentItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(ShipmentItem::class, OrderItem::class);
+    }
+
+    /**
+     * the related shipments
+     *
+     * @return HasManyDeep
+     */
+    public function shipments(): HasManyDeep
+    {
+        return $this->hasManyDeepFromRelations(
+            $this->shipmentItems(),
+            (new ShipmentItem())->shipment()
+        )->groupBy('shipments.id');
+    }
 
     /**
      * @return float
