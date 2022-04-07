@@ -62,14 +62,14 @@
         "hooks": {
             "post-merge": "composer install",
             "pre-commit": [
-                "php artisan fixer:fix --dry-run --stop-on-violation .",
-                "php artisan test --parallel --stop-on-failure",
-                "composer normalize",
-                "php artisan envy:sync --force"
+                "php artisan fixer:fix --dry-run --stop-on-violation . || exit 1",
+                "php artisan test --parallel --stop-on-failure || exit 1",
+                "php artisan envy:sync --force || exit 1",
+                "composer normalize"
             ],
             "pre-push": [
-                "php artisan fixer:fix --dry-run .",
-                "phpunit"
+                "php artisan fixer:fix --dry-run --stop-on-violation . || exit 1",
+                "php artisan test --parallel --stop-on-failure || exit 1"
             ]
         },
         "laravel": {

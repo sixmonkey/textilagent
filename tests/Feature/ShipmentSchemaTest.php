@@ -95,8 +95,6 @@ class ShipmentSchemaTest extends TestCase
         $this->assertEquals(12, $shipment->orders->count());
 
         $this->assertInstanceOf(Collection::class, $shipment->orders);
-
-        $this->assertFalse(true);
     }
 
     /**
