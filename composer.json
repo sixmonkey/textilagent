@@ -22,6 +22,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
+        "brianium/paratest": "^6.4",
         "ergebnis/composer-normalize": "^2.25",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
@@ -58,7 +59,7 @@
             "post-merge": "composer install",
             "pre-commit": [
                 "php artisan fixer:fix --dry-run --stop-on-violation .",
-                "php artisan test",
+                "php artisan test --parallel --stop-on-failure",
                 "composer normalize",
                 "php artisan envy:sync --force"
             ],
