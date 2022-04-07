@@ -10,8 +10,8 @@ use Tests\TestCase;
 
 class CountrySchemaTest extends TestCase
 {
-
-    use WithFaker, RefreshDatabase;
+    use WithFaker;
+    use RefreshDatabase;
 
     /**
      * @return void
@@ -39,8 +39,7 @@ class CountrySchemaTest extends TestCase
      *
      * @return void
      */
-    public
-    function test_model_can_be_instantiated()
+    public function test_model_can_be_instantiated()
     {
         $country = Country::factory()->create();
 
@@ -51,8 +50,7 @@ class CountrySchemaTest extends TestCase
      *
      * @return void
      */
-    public
-    function test_model_can_be_translated()
+    public function test_model_can_be_translated()
     {
         $en = $this->faker->country;
         $it = $this->faker->country;

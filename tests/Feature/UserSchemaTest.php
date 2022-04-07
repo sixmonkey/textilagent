@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class UserSchemaTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -30,7 +29,9 @@ class UserSchemaTest extends TestCase
                 'phone',
                 'address',
                 'country_id',
-            ]), 1);
+            ]),
+            1
+        );
     }
 
     /**

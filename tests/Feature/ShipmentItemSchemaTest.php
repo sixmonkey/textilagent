@@ -14,7 +14,6 @@ use Tests\TestCase;
 
 class ShipmentItemSchemaTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**

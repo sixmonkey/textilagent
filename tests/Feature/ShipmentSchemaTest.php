@@ -15,7 +15,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 
 class ShipmentSchemaTest extends TestCase
 {
-
     use RefreshDatabase;
     use WithFaker;
 
@@ -64,7 +63,6 @@ class ShipmentSchemaTest extends TestCase
      */
     public function test_shipment_has_order_items()
     {
-
         $shipment = Shipment::factory()
             ->hasAttached(
                 OrderItem::factory()->count(12),
@@ -98,8 +96,7 @@ class ShipmentSchemaTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $shipment->orders);
 
-        $this->assertTrue(false);
-
+        $this->assertFalse(true);
     }
 
     /**

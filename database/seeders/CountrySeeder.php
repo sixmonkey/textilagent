@@ -44,7 +44,9 @@ class CountrySeeder extends Seeder
                         ]
                     );
 
-                    if (!$country->translations) return;
+                    if (!$country->translations) {
+                        return;
+                    }
 
                     $country->translations->all()->each(function ($value, $locale) use ($newCountry) {
                         $language = Lingua::createFromISO_639_2t($locale);
@@ -55,6 +57,7 @@ class CountrySeeder extends Seeder
                     });
 
                     $newCountry->save();
-                });
+                }
+            );
     }
 }

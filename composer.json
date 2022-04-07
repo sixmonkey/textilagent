@@ -28,10 +28,12 @@
         "ergebnis/composer-normalize": "^2.25",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^v3.8",
         "laravel/sail": "^1.13",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
         "phpunit/phpunit": "^9.5.10",
+        "stechstudio/laravel-php-cs-fixer": "^3.1",
         "worksome/envy": "^0.3.1"
     },
     "minimum-stability": "dev",

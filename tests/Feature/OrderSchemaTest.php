@@ -163,7 +163,6 @@ class OrderSchemaTest extends TestCase
         $this->assertEquals(3, $order->shipments->count());
 
         $this->assertInstanceOf(Collection::class, $order->shipments);
-
     }
 
     /**

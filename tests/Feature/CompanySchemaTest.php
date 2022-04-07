@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class CompanySchemaTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
