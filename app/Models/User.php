@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\HasCountry;
+use App\Models\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as AuthUser;
@@ -15,6 +16,7 @@ class User extends AuthUser
     use HasFactory;
     use Notifiable;
     use HasCountry;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -54,5 +56,17 @@ class User extends AuthUser
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'agent_id');
+    }
+
+    /**
+     * representation of this model in a search
+     *
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+        ];
     }
 }

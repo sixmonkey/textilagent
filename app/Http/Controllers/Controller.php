@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class Controller extends BaseController
@@ -55,6 +56,10 @@ class Controller extends BaseController
      */
     public function index(Request $request): AnonymousResourceCollection
     {
+        if (method_exists($this->model, 'scopeSearch')) {
+            $this->allowed_filters[] = AllowedFilter::scope('search');
+        }
+
         $result = QueryBuilder::for($this->model)
             ->allowedSorts($this->allowed_sorts)
             ->allowedFilters($this->allowed_filters)
