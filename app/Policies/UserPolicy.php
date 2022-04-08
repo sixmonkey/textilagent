@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function viewAny(User $user): Response|bool
     {
-        return true;
+        return $user->admin;
     }
 
     /**
@@ -28,9 +28,9 @@ class UserPolicy
      * @param User $model
      * @return Response|bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $model): Response|bool
     {
-        //
+        return ($user->id == $model->id) || $user->admin;
     }
 
     /**
@@ -41,7 +41,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->admin;
     }
 
     /**
@@ -53,7 +53,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return ($user->id == $model->id) || $user->admin;
     }
 
     /**
@@ -65,7 +65,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $user->admin;
     }
 
     /**
@@ -77,7 +77,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        //
+        return $user->admin;
     }
 
     /**
@@ -89,6 +89,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        //
+        return $user->admin;
     }
 }

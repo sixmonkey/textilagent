@@ -16,8 +16,20 @@ class Country extends Model
      *
      * @var string[]
      */
-    public $translatable = [
+    public array $translatable = [
         'name',
         'official_name'
     ];
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'emoji' => $this->emoji,
+        ];
+    }
 }

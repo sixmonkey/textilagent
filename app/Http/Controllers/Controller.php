@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -49,13 +50,23 @@ class Controller extends BaseController
     protected array $allowed_includes = [];
 
     /**
+     * allowed fields
+     *
+     * @var array
+     */
+    protected array $allowed_fields = [];
+
+    /**
      * Display a listing of the resource.
      *
      * @param Request $request
      * @return AnonymousResourceCollection
+     * @throws AuthorizationException
      */
     public function index(Request $request): AnonymousResourceCollection
     {
+        $this->authorize('viewAny', $this->model);
+
         if (method_exists($this->model, 'scopeSearch')) {
             $this->allowed_filters[] = AllowedFilter::scope('search');
         }
@@ -88,11 +99,22 @@ class Controller extends BaseController
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return JsonResource
+     * @throws AuthorizationException
      */
-    public function show($id)
+    public function show(int $id): JsonResource
     {
-        //
+        $result = QueryBuilder::for($this->model)
+            ->allowedSorts($this->allowed_sorts)
+            ->allowedFields($this->allowed_fields)
+            ->allowedIncludes($this->allowed_includes)
+            ->find($id);
+
+        $this->authorize('view', $result);
+
+        return new JsonResource(
+            $result
+        );
     }
 
     /**

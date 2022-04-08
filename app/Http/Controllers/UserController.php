@@ -28,9 +28,16 @@ class UserController extends Controller
     protected array $allowed_filters = ['admin', 'country_id'];
 
     /**
+     * allowed filters
+     *
+     * @var array
+     */
+    protected array $allowed_fields = ['name', 'orders.contract'];
+
+    /**
      * allowed includes
      *
      * @var array
      */
-    protected array $allowed_includes = ['orders'];
+    protected array $allowed_includes = ['orders', 'country'];
 }

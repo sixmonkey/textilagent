@@ -2,12 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\UserController;
-use App\Models\Company;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\Request;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -26,7 +23,12 @@ class UserControllerTest extends TestCase
     {
         $users = User::factory()->count(100)->create();
 
-        Sanctum::actingAs($users->first());
+        $admin = $users->first();
+        $admin->admin = true;
+        $admin->save();
+
+
+        Sanctum::actingAs($admin);
 
         $response = $this->getJson('/api/users');
         $response
@@ -65,5 +67,49 @@ class UserControllerTest extends TestCase
         $response = $this->getJson('/api/users?sort=-name');
         $response
             ->assertStatus(200);
+
+        $admin = $users->first();
+        $admin->admin = false;
+        $admin->save();
+
+        $response = $this->getJson('/api/users');
+        $response
+            ->assertStatus(403);
+    }
+
+    /**
+     * testing the index.
+     *
+     * @return void
+     */
+    public function test_show()
+    {
+        $user = User::factory()
+            ->create(['admin' => false]);
+
+        Sanctum::actingAs($user);
+
+        $response = $this->getJson('/api/users/' . $user->id);
+        $response
+            ->assertStatus(200)
+            ->assertJson(['data' => $user->toArray()]);
+
+        $admin = User::factory()
+            ->create(['admin' => true]);
+
+        Sanctum::actingAs($admin);
+
+        $response = $this->getJson('/api/users/' . $user->id);
+        $response
+            ->assertStatus(200);
+
+        $otherUser = User::factory()
+            ->create(['admin' => false]);
+
+        Sanctum::actingAs($otherUser);
+
+        $response = $this->getJson('/api/users/' . $user->id);
+        $response
+            ->assertStatus(403);
     }
 }
