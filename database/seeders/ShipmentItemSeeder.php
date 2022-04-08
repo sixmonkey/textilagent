@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ShipmentItem;
 use Illuminate\Database\Seeder;
 
 class ShipmentItemSeeder extends Seeder
@@ -13,6 +14,8 @@ class ShipmentItemSeeder extends Seeder
      */
     public function run()
     {
-        //
+        !ShipmentItem::all()->count() && ShipmentItem::factory()
+            ->count(4400)
+            ->create();
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Order;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class OrderSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,8 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        !Order::all()->count() && Order::factory()
-            ->count(550)
+        !User::all()->count() && User::factory()
+            ->count(50)
             ->create();
     }
 }
