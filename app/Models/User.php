@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasCountry;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -44,4 +45,14 @@ class User extends AuthUser
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * related orders
+     *
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'agent_id');
+    }
 }
