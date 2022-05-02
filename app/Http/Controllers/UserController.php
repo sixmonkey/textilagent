@@ -11,7 +11,7 @@ class UserController extends Controller
      *
      * @var string
      */
-    protected string $model = User::class;
+    public string $model = User::class;
 
     /**
      * allowed sort parameters

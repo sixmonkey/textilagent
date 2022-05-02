@@ -7,7 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
@@ -26,7 +26,7 @@ class Controller extends BaseController
      *
      * @var string
      */
-    protected string $model = User::class;
+    public string $model = User::class;
 
     /**
      * allowed sort parameters
@@ -88,11 +88,21 @@ class Controller extends BaseController
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResource
+     * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResource
     {
-        //
+        $this->authorize('create', $this->model);
+
+        $m = new $this->model();
+        #dd($this->model::definedRelations()); // dump and die as array
+
+        $new = $this->model::create($request->only($m->getFillable()));
+
+        dump($this->model::definedRelations());
+
+        return new JsonResource($new);
     }
 
     /**

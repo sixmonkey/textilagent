@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends AuthUser
@@ -50,6 +51,18 @@ class User extends AuthUser
     ];
 
     /**
+     * @param array $options
+     * @return bool
+     */
+    public function save(array $options = [])
+    {
+        if (!$this->exists && empty($this->getAttribute('password'))) {
+            $this->password = bcrypt(Str::random(16));
+        }
+        return parent::save($options);
+    }
+
+    /**
      * related orders
      *
      * @return HasMany
@@ -69,5 +82,24 @@ class User extends AuthUser
         return [
             'name' => $this->name,
         ];
+    }
+
+    public static function definedRelations(): array
+    {
+        $reflector = new \ReflectionClass(get_called_class());
+
+        return collect($reflector->getMethods())
+            ->filter(
+                fn ($method) => !empty($method->getReturnType()) &&
+                    str_contains(
+                        $method->getReturnType(),
+                        'Illuminate\Database\Eloquent\Relations'
+                    )
+            )
+            ->mapWithKeys(function ($relationship) {
+                return [$relationship->name => class_basename($relationship->getReturnType()->getName())];
+            })
+            ->
+            all();
     }
 }
