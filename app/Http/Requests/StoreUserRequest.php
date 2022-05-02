@@ -26,6 +26,19 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|unique:users|email',
+            'country.id' => 'exists:countries,id',
+        ];
+    }
+
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'country.id.exists' => 'Unknown country.',
         ];
     }
 }

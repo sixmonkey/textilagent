@@ -17,11 +17,9 @@ class Request extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array
      */
-    public function rules(): array
+    protected function getFromRelatedRequestClass($type = 'rules')
     {
         $nameSpace = rtrim(app()->getNamespace(), '\\') . '\Http\Requests\\';
         $model = (class_basename($this->route()->getController()->model));
@@ -31,9 +29,29 @@ class Request extends FormRequest
 
         if (class_exists($className)) {
             $request = new $className();
-            return $request->rules();
+            return call_user_func([$request, $type]);
         }
 
         return [];
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules(): array
+    {
+        return $this->getFromRelatedRequestClass();
+    }
+
+    /**
+     * Get the messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return $this->getFromRelatedRequestClass('messages');
     }
 }
