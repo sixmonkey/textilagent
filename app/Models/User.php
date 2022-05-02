@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\HasCountry;
+use App\Models\Traits\HasRelationships;
 use App\Models\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,7 @@ class User extends AuthUser
     use Notifiable;
     use HasCountry;
     use Searchable;
+    use HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +31,7 @@ class User extends AuthUser
         'email',
         'password',
         'address',
+        'phone',
     ];
 
     /**
@@ -39,6 +42,7 @@ class User extends AuthUser
     protected $hidden = [
         'password',
         'remember_token',
+        'country_id'
     ];
 
     /**
@@ -54,7 +58,7 @@ class User extends AuthUser
      * @param array $options
      * @return bool
      */
-    public function save(array $options = [])
+    public function save(array $options = []): bool
     {
         if (!$this->exists && empty($this->getAttribute('password'))) {
             $this->password = bcrypt(Str::random(16));
@@ -82,24 +86,5 @@ class User extends AuthUser
         return [
             'name' => $this->name,
         ];
-    }
-
-    public static function definedRelations(): array
-    {
-        $reflector = new \ReflectionClass(get_called_class());
-
-        return collect($reflector->getMethods())
-            ->filter(
-                fn ($method) => !empty($method->getReturnType()) &&
-                    str_contains(
-                        $method->getReturnType(),
-                        'Illuminate\Database\Eloquent\Relations'
-                    )
-            )
-            ->mapWithKeys(function ($relationship) {
-                return [$relationship->name => class_basename($relationship->getReturnType()->getName())];
-            })
-            ->
-            all();
     }
 }

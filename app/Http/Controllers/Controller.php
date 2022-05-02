@@ -95,14 +95,21 @@ class Controller extends BaseController
     {
         $this->authorize('create', $this->model);
 
-        $m = new $this->model();
-        #dd($this->model::definedRelations()); // dump and die as array
+        $entity = new $this->model();
 
-        $new = $this->model::create($request->only($m->getFillable()));
+        $new = call_user_func([$this->model, 'create'], $request->only($entity->getFillable()));
 
-        dump($this->model::definedRelations());
+        $this->storeRelated($new, $request);
 
-        return new JsonResource($new);
+        $result = QueryBuilder::for($this->model)
+            ->allowedSorts($this->allowed_sorts)
+            ->allowedFields($this->allowed_fields)
+            ->allowedIncludes($this->allowed_includes)
+            ->find($new->id);
+
+        return new JsonResource(
+            $result
+        );
     }
 
     /**
@@ -148,5 +155,25 @@ class Controller extends BaseController
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Store related from request
+     *
+     * @param $for
+     * @param $request
+     * @return void
+     */
+    private function storeRelated($for, $request)
+    {
+        foreach (call_user_func([$this->model, 'definedRelationships']) as $relationship => $type) {
+            if ($request->has($relationship)) {
+                if ($type === 'BelongsTo') {
+                    $related = call_user_func([$for, $relationship])->getRelated()->find($request->input($relationship . '.id'));
+                    call_user_func([$for, $relationship])->associate($related);
+                }
+                $for->save();
+            }
+        }
     }
 }
