@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Http\Requests\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
@@ -88,10 +89,9 @@ class Controller extends BaseController
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return JsonResource
      * @throws AuthorizationException
      */
-    public function store(Request $request): JsonResource
+    public function store(Request $request): JsonResponse
     {
         $this->authorize('create', $this->model);
 
@@ -107,9 +107,11 @@ class Controller extends BaseController
             ->allowedIncludes($this->allowed_includes)
             ->find($new->id);
 
-        return new JsonResource(
+        return (new JsonResource(
             $result
-        );
+        ))
+            ->toResponse($request)
+            ->setStatusCode(201);
     }
 
     /**
@@ -125,7 +127,7 @@ class Controller extends BaseController
             ->allowedSorts($this->allowed_sorts)
             ->allowedFields($this->allowed_fields)
             ->allowedIncludes($this->allowed_includes)
-            ->find($id);
+            ->findOrFail($id);
 
         $this->authorize('view', $result);
 
@@ -139,11 +141,26 @@ class Controller extends BaseController
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return object
+     * @throws AuthorizationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): object
     {
-        //
+        $entity = call_user_func([$this->model, 'findOrFail'], $id);
+
+        $this->authorize('update', $entity);
+
+        $entity->update($request->only($entity->getFillable()));
+
+        $this->storeRelated($entity, $request);
+
+        return new JsonResource(
+            QueryBuilder::for($this->model)
+                ->allowedSorts($this->allowed_sorts)
+                ->allowedFields($this->allowed_fields)
+                ->allowedIncludes($this->allowed_includes)
+                ->find($entity->id)
+        );
     }
 
     /**
