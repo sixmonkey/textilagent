@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\Order;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Schema;
 use Tests\TestCase;
@@ -44,7 +46,7 @@ class CompanySchemaTest extends TestCase
     /**
      * @return void
      */
-    public function test_user_belongs_to_country()
+    public function test_company_belongs_to_country()
     {
         $country = Country::factory()->create();
         $company = Company::factory()
@@ -57,7 +59,35 @@ class CompanySchemaTest extends TestCase
     /**
      * @return void
      */
-    public function test_user_can_get_country_name()
+    public function test_company_has_sales()
+    {
+        $company = Company::factory()
+            ->hasSales(3)
+            ->create();
+
+        $this->assertEquals(3, $company->sales->count());
+
+        $this->assertInstanceOf(Collection::class, $company->sales);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_company_has_purchases()
+    {
+        $company = Company::factory()
+            ->hasPurchases(3)
+            ->create();
+
+        $this->assertEquals(3, $company->purchases->count());
+
+        $this->assertInstanceOf(Collection::class, $company->purchases);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_company_can_get_country_name()
     {
         $country = Country::factory()->create();
         $company = Company::factory()

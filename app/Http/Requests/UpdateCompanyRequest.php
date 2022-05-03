@@ -11,7 +11,7 @@ class UpdateCompanyRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return false;
     }
@@ -21,10 +21,11 @@ class UpdateCompanyRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'name' => 'unique:companies|max:255',
+            'email' => 'unique:companies|email',
         ];
     }
 }
