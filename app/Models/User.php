@@ -42,7 +42,6 @@ class User extends AuthUser
     protected $hidden = [
         'password',
         'remember_token',
-        'country_id'
     ];
 
     /**

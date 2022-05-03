@@ -16,4 +16,16 @@ trait HasCountry
     {
         return $this->belongsTo(Country::class);
     }
+
+    /**
+     * @param array $values
+     * @return array
+     */
+    protected function getArrayableItems(array $values)
+    {
+        if (!in_array('country_id', $this->hidden)) {
+            $this->hidden[] = 'country_id';
+        }
+        return parent::getArrayableItems($values);
+    }
 }
