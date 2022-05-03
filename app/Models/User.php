@@ -87,4 +87,14 @@ class User extends AuthUser
             'name' => $this->name,
         ];
     }
+
+    /**
+     * get the users title
+     *
+     * @return mixed
+     */
+    public function getTitleAttribute()
+    {
+        return $this->name;
+    }
 }

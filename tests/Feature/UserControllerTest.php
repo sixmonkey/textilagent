@@ -202,7 +202,6 @@ class UserControllerTest extends TestCase
         $this->assertDatabaseHas('users', $payload);
 
 
-
         $admin = User::factory()
             ->create(['admin' => true]);
 
@@ -216,5 +215,34 @@ class UserControllerTest extends TestCase
         $response
             ->assertStatus(Response::HTTP_OK);
         $this->assertDatabaseHas('users', $payload);
+    }
+
+    public function test_delete()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->deleteJson('/api/users/' . $user->id);
+        $response
+            ->assertStatus(Response::HTTP_UNAUTHORIZED);
+
+        $otherUser = User::factory()
+            ->create(['admin' => false]);
+
+        Sanctum::actingAs($otherUser);
+
+        $response = $this->deleteJson('/api/users/' . $user->id);
+        $response
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $admin = User::factory()
+            ->create(['admin' => true]);
+
+        Sanctum::actingAs($admin);
+
+        $response = $this->deleteJson('/api/users/' . $user->id);
+        $response
+            ->assertStatus(Response::HTTP_OK);
+
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
     }
 }

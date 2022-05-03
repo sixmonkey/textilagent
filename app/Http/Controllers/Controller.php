@@ -167,11 +167,19 @@ class Controller extends BaseController
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $entity = call_user_func([$this->model, 'findOrFail'], $id);
+
+        $this->authorize('delete', $entity);
+
+        if ($entity->delete()) {
+            return new JsonResponse(['message' => 'Successfully deleted ' . ($entity->title ?? '#' . $entity->id) . '!']);
+        }
+        return new JsonResponse(['message' => 'Unknown error'], 500);
     }
 
     /**
