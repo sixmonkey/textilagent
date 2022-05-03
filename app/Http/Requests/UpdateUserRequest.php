@@ -24,7 +24,20 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'email' => 'unique:users|email',
+            'country.id' => 'exists:countries,id',
+        ];
+    }
+
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'country.id.exists' => 'Unknown country.',
         ];
     }
 }
