@@ -58,9 +58,9 @@ class Order extends Model
      *
      * @return BelongsTo
      */
-    public function supplier(): BelongsTo
+    public function seller(): BelongsTo
     {
-        return $this->belongsTo(Company::class, 'supplier_id');
+        return $this->belongsTo(Company::class, 'seller_id');
     }
 
     /**
@@ -68,9 +68,9 @@ class Order extends Model
      *
      * @return BelongsTo
      */
-    public function customer(): BelongsTo
+    public function purchaser(): BelongsTo
     {
-        return $this->belongsTo(Company::class, 'customer_id');
+        return $this->belongsTo(Company::class, 'purchaser_id');
     }
 
     /**

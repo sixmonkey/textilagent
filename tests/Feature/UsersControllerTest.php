@@ -10,7 +10,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-class UserControllerTest extends TestCase
+class UsersControllerTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;

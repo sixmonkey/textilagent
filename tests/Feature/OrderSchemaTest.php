@@ -32,8 +32,8 @@ class OrderSchemaTest extends TestCase
                 'customer_pays',
                 'completed',
                 'agent_id',
-                'customer_id',
-                'supplier_id',
+                'purchaser_id',
+                'seller_id',
             ])
         );
     }
@@ -82,10 +82,10 @@ class OrderSchemaTest extends TestCase
     {
         $company = Company::factory()->create();
         $order = Order::factory()
-            ->for($company, 'supplier')
+            ->for($company, 'purchaser')
             ->create();
 
-        $this->assertInstanceOf(Company::class, $order->supplier);
+        $this->assertInstanceOf(Company::class, $order->purchaser);
     }
 
     /**
@@ -95,10 +95,10 @@ class OrderSchemaTest extends TestCase
     {
         $company = Company::factory()->create();
         $order = Order::factory()
-            ->for($company, 'customer')
+            ->for($company, 'seller')
             ->create();
 
-        $this->assertInstanceOf(Company::class, $order->customer);
+        $this->assertInstanceOf(Company::class, $order->seller);
     }
 
     /**

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Company;
 
-class UserController extends Controller
+class CompaniesController extends Controller
 {
     /**
      * The model for this resource
      *
      * @var string
      */
-    public string $model = User::class;
+    public string $model = Company::class;
 
     /**
      * allowed sort parameters
@@ -25,7 +25,7 @@ class UserController extends Controller
      *
      * @var array
      */
-    protected array $allowed_filters = ['admin', 'country_id'];
+    protected array $allowed_filters = ['country_id'];
 
     /**
      * allowed filters
@@ -39,5 +39,5 @@ class UserController extends Controller
      *
      * @var array
      */
-    protected array $allowed_includes = ['orders', 'country'];
+    protected array $allowed_includes = ['sales', 'purchases', 'country'];
 }

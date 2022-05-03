@@ -22,8 +22,8 @@ class OrderFactory extends Factory
             'customer_pays' => $this->faker->boolean(20),
             'completed' => $this->faker->boolean,
             'agent_id' => User::all()->count() ? User::inRandomOrder()->first()->id : User::factory()->create()->id,
-            'customer_id' => Company::all()->count() ? Company::inRandomOrder()->first()->id : Company::factory()->create()->id,
-            'supplier_id' => Company::all()->count() ? Company::inRandomOrder()->first()->id : Company::factory()->create()->id,
+            'seller_id' => Company::all()->count() ? Company::inRandomOrder()->first()->id : Company::factory()->create()->id,
+            'purchaser_id' => Company::all()->count() ? Company::inRandomOrder()->first()->id : Company::factory()->create()->id,
             'currency_id' => Currency::all()->count() ? Currency::inRandomOrder()->first()->id : Currency::factory()->create()->id,
         ];
     }
