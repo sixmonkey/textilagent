@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompaniesController;
+use App\Http\Controllers\UnitsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,5 +25,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResources([
         'users' => UsersController::class,
         'companies' => CompaniesController::class,
+        'units' => UnitsController::class,
     ]);
 });
