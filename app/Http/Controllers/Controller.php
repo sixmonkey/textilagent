@@ -11,7 +11,6 @@ use App\Http\Requests\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;

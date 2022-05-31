@@ -95,15 +95,6 @@ class CompaniesControllerTest extends TestCase
             ->assertStatus(Response::HTTP_OK)
             ->assertJson(['data' => $company->toArray()]);
 
-        $admin = User::factory()
-            ->create(['admin' => true]);
-
-        Sanctum::actingAs($admin);
-
-        $response = $this->getJson('/api/companies/' . $company->id);
-        $response
-            ->assertStatus(Response::HTTP_OK);
-
         $otherUser = User::factory()
             ->create(['admin' => false]);
 
@@ -115,7 +106,7 @@ class CompaniesControllerTest extends TestCase
     }
 
     /**
-     * testing creation of a user.
+     * testing creation of a company.
      *
      * @return void
      */
@@ -159,6 +150,11 @@ class CompaniesControllerTest extends TestCase
         $this->assertDatabaseHas('companies', $payload);
     }
 
+    /**
+     * test updating a company
+     *
+     * @return void
+     */
     public function test_update()
     {
         $company = Company::factory()->create();
@@ -195,6 +191,11 @@ class CompaniesControllerTest extends TestCase
         $this->assertDatabaseHas('companies', $payload);
     }
 
+    /**
+     * test deleting a company
+     *
+     * @return void
+     */
     public function test_delete()
     {
         $company = Company::factory()->create();

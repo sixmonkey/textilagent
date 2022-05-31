@@ -17,9 +17,10 @@ class Request extends FormRequest
     }
 
     /**
+     * @param string $type
      * @return array
      */
-    protected function getFromRelatedRequestClass($type = 'rules')
+    protected function getFromRelatedRequestClass($type = 'rules'): array
     {
         $nameSpace = rtrim(app()->getNamespace(), '\\') . '\Http\Requests\\';
         $model = (class_basename($this->route()->getController()->model));
@@ -28,7 +29,7 @@ class Request extends FormRequest
         $className = $nameSpace . $action . $model . 'Request';
 
         if (class_exists($className)) {
-            $request = new $className();
+            $request = $className::createFrom($this);
             return call_user_func([$request, $type]);
         }
 
