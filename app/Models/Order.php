@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,7 @@ class Order extends Model
 {
     use HasFactory;
     use HasRelationships;
+    use Searchable;
 
     /**
      * The accessors to append to the model's array form.
@@ -107,10 +109,24 @@ class Order extends Model
     }
 
     /**
+     * the total value of this order
+     *
      * @return float
      */
-    public function getTotalAttribute()
+    public function getTotalAttribute(): float
     {
         return (float)$this->orderItems()->selectRaw('sum(order_items.amount * order_items.price) as total_value')->first('total_value')->total_value;
+    }
+
+    /**
+     * representation of this model in a search
+     *
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'contract' => $this->contract,
+        ];
     }
 }
