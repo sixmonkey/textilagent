@@ -88,6 +88,7 @@ class Controller extends BaseController
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @return JsonResponse
      * @throws AuthorizationException
      */
     public function store(Request $request): JsonResponse

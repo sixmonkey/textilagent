@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use JetBrains\PhpStorm\ArrayShape;
 
 class CurrencyFactory extends Factory
 {
@@ -11,7 +12,7 @@ class CurrencyFactory extends Factory
      *
      * @return array
      */
-    public function definition(): array
+    #[ArrayShape(['code' => "string"])] public function definition(): array
     {
         return [
             'code' => $this->faker->unique()->currencyCode

@@ -26,6 +26,7 @@ class Request extends FormRequest
         $model = (class_basename($this->route()->getController()->model));
         $action = (ucfirst($this->route()->getActionMethod()));
 
+
         $className = $nameSpace . $action . $model . 'Request';
 
         if (class_exists($className)) {
