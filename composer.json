@@ -26,7 +26,8 @@
         "spresnac/laravel-create-user-cli": "^1.0",
         "staudenmeir/belongs-to-through": "^2.11",
         "staudenmeir/eloquent-has-many-deep": "^1.14",
-        "whitecube/lingua": "^1.1"
+        "whitecube/lingua": "^1.1",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
@@ -35,6 +36,7 @@
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^v3.8",
+        "jaybizzle/laravel-migrations-organiser": "^6.2",
         "laravel/sail": "^1.13",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
