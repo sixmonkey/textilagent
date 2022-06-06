@@ -19,4 +19,12 @@ class Unit extends Model
     protected $fillable = [
         'code',
     ];
+
+    /**
+     * @return string
+     */
+    public function getTitleAttribute(): string
+    {
+        return $this->getAttribute('code');
+    }
 }
