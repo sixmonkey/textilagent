@@ -58,6 +58,21 @@ class Controller extends BaseController
     protected array $allowed_fields = [];
 
     /**
+     * equivalent of good old CakePHP beforeEach
+     *
+     * @param $method
+     * @param $parameters
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function callAction($method, $parameters)
+    {
+        foreach ($this->allowed_includes as &$allowed_include) {
+            $allowed_include = Str::camel($allowed_include);
+        }
+        return parent::callAction($method, $parameters);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param Request $request
