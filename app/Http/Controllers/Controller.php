@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -99,7 +100,7 @@ class Controller extends BaseController
 
         $new = call_user_func([$this->model, 'create'], $request->only($entity->getFillable()));
 
-        $this->storeRelated($new, $request);
+        $this->storeRelated($new, $request->collect());
 
         $result = QueryBuilder::for($this->model)
             ->allowedSorts($this->allowed_sorts)
@@ -131,7 +132,7 @@ class Controller extends BaseController
 
         $this->authorize('view', $result);
 
-        return new JsonResource(
+        return new JsonResource( // TODO: switch to explicit resources
             $result
         );
     }
@@ -152,7 +153,7 @@ class Controller extends BaseController
 
         $entity->update($request->only($entity->getFillable()));
 
-        $this->storeRelated($entity, $request);
+        $this->storeRelated($entity, $request->collect());
 
         return new JsonResource(
             QueryBuilder::for($this->model)
@@ -191,13 +192,19 @@ class Controller extends BaseController
      */
     private function storeRelated($for, $request)
     {
-        if (!method_exists($this->model, 'definedRelationships')) {
+        if (!method_exists($for, 'definedRelationships')) {
             return;
         }
 
-        foreach (call_user_func([$this->model, 'definedRelationships']) as $relationship => $type) {
-            if ($request->has($relationship)) {
-                $data = $request->input($relationship);
+        foreach (call_user_func([$for, 'definedRelationships']) as $relationship => $type) {
+            $relationship_key = Str::snake($relationship);
+
+            if ($request->has($relationship_key)) {
+                $data = $request->get($relationship_key);
+
+                if (!is_array($data)) {
+                    continue;
+                }
                 switch ($type) {
                     case 'BelongsTo':
                         $this->storeBelongsTo($for, $relationship, $data);
@@ -215,29 +222,33 @@ class Controller extends BaseController
     {
         $related = call_user_func([$for, $relationship])
             ->getRelated()
-            ->where('id', $data['id'] ?? null)
+            ->where('id', $data['id'] ?? null) // TODO make sure id exists when set
             ->firstOr(function () use ($for, $relationship, $data) {
                 return call_user_func([$for, $relationship])
                     ->getRelated()->create($data);
             });
+        $this->storeRelated($related, collect($data));
         call_user_func([$for, $relationship])->associate($related);
     }
 
     private function storeHasMany($for, $relationship, $data)
     {
-        $newItmes = [];
+        $newItems = [];
         $related = call_user_func([$for, $relationship])->getRelated();
-        collect($data)->each(function ($item) use ($for, $relationship, $related, &$newItmes) {
+        collect($data)->each(function ($item) use ($for, $relationship, $related, &$newItems) {
             $newItem = call_user_func([$related, 'where'], ['id' => $item['id'] ?? null])
                 ->firstOr(function () use ($for, $relationship, $item) {
                     return call_user_func([$for, $relationship])
-                        ->getRelated()->create($item);
+                        ->getRelated()
+                        ->create($item);
                 });
 
             $newItem->fill($item);
-            $newItmes[] = $newItem;
+            $newItems[] = $newItem;
+
+            $this->storeRelated($newItem, collect($item));
         });
-        $related->whereNotIn('id', collect($newItmes)->pluck('id'))->delete();
-        call_user_func([$for, $relationship])->saveMany($newItmes);
+        $related->whereNotIn('id', collect($newItems)->pluck('id'))->delete();
+        call_user_func([$for, $relationship])->saveMany($newItems);
     }
 }
