@@ -65,7 +65,7 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order)
     {
-        //
+        return $user->admin;
     }
 
     /**
@@ -77,7 +77,7 @@ class OrderPolicy
      */
     public function restore(User $user, Order $order)
     {
-        //
+        return $user->admin;
     }
 
     /**
@@ -89,6 +89,6 @@ class OrderPolicy
      */
     public function forceDelete(User $user, Order $order)
     {
-        //
+        return $user->admin;
     }
 }
