@@ -42,6 +42,8 @@ class User extends AuthUser
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -76,6 +78,16 @@ class User extends AuthUser
     }
 
     /**
+     * get the users title
+     *
+     * @return mixed
+     */
+    public function getTitleAttribute()
+    {
+        return $this->name;
+    }
+
+    /**
      * representation of this model in a search
      *
      * @return array
@@ -85,15 +97,5 @@ class User extends AuthUser
         return [
             'name' => $this->name,
         ];
-    }
-
-    /**
-     * get the users title
-     *
-     * @return mixed
-     */
-    public function getTitleAttribute()
-    {
-        return $this->name;
     }
 }

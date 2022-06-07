@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\HigherOrderBuilderProxy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SubAgent extends Model
 {
     use HasFactory;
+    use HasRelationships;
 
     /**
      * The attributes that should be hidden for serialization.

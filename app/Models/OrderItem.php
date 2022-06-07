@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class OrderItem extends Model
 {
     use HasFactory;
+    use HasRelationships;
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'order_id',
+        'unit_id',
+        'created_at',
+        'updated_at',
+    ];
 
     /**
      * The attributes that are mass assignable.
