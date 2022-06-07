@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Currency;
+use App\Models\SubAgent;
 use Illuminate\Database\Seeder;
 
-class CurrencySeeder extends Seeder
+class SubAgentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,8 @@ class CurrencySeeder extends Seeder
      */
     public function run()
     {
-        Currency::updateOrCreate(['code' => 'EUR']);
-        Currency::updateOrCreate(['code' => 'USD']);
+        !SubAgent::all()->count() && SubAgent::factory()
+            ->count(4400)
+            ->create();
     }
 }
