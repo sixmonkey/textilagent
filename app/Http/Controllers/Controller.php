@@ -218,6 +218,12 @@ class Controller extends BaseController
         }
     }
 
+    /**
+     * @param $for
+     * @param $relationship
+     * @param $data
+     * @return void
+     */
     private function storeBelongsTo($for, $relationship, $data)
     {
         $related = call_user_func([$for, $relationship])
@@ -231,6 +237,12 @@ class Controller extends BaseController
         call_user_func([$for, $relationship])->associate($related);
     }
 
+    /**
+     * @param $for
+     * @param $relationship
+     * @param $data
+     * @return void
+     */
     private function storeHasMany($for, $relationship, $data)
     {
         $newItems = [];

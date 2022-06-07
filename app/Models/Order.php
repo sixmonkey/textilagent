@@ -21,6 +21,20 @@ class Order extends Model
     use DefaultOrderBy;
 
     /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'agent_id',
+        'seller_id',
+        'purchaser_id',
+        'currency_id',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<string>
@@ -116,6 +130,16 @@ class Order extends Model
     }
 
     /**
+     * the related order items
+     *
+     * @return HasMany
+     */
+    public function subAgents(): HasMany
+    {
+        return $this->hasMany(SubAgent::class);
+    }
+
+    /**
      * the related shipment items
      *
      * @return HasManyThrough
@@ -146,6 +170,16 @@ class Order extends Model
     public function getTotalAttribute(): float
     {
         return (float)$this->orderItems()->selectRaw('sum(order_items.amount * order_items.price) as total_value')->first('total_value')->total_value;
+    }
+
+    /**
+     * the title of this order
+     *
+     * @return string|null
+     */
+    public function getTitleAttribute(): ?string
+    {
+        return $this->getAttribute('contract') ?? null;
     }
 
     /**

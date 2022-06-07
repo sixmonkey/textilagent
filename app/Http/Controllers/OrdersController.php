@@ -38,8 +38,11 @@ class OrdersController extends Controller
         'seller',
         'purchaser',
         'orderItems',
+        'orderItems.unit',
         'shipments',
-        'shipmentItems'
+        'shipmentItems',
+        'subAgents',
+        'subAgents.user'
     ];
 
     protected array $allowed_filters = [
