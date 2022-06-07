@@ -37,11 +37,11 @@ class OrderPolicy
      * Determine whether the user can create models.
      *
      * @param User $user
-     * @return Response|bool
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
-        //
+        return $user->admin;
     }
 
     /**
@@ -53,7 +53,7 @@ class OrderPolicy
      */
     public function update(User $user, Order $order)
     {
-        //
+        return $user->admin;
     }
 
     /**

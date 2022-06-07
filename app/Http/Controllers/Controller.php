@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Request;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use App\Http\Requests\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -191,14 +191,53 @@ class Controller extends BaseController
      */
     private function storeRelated($for, $request)
     {
+        if (!method_exists($this->model, 'definedRelationships')) {
+            return;
+        }
+
         foreach (call_user_func([$this->model, 'definedRelationships']) as $relationship => $type) {
             if ($request->has($relationship)) {
-                if ($type === 'BelongsTo') {
-                    $related = call_user_func([$for, $relationship])->getRelated()->find($request->input($relationship . '.id'));
-                    call_user_func([$for, $relationship])->associate($related);
+                $data = $request->input($relationship);
+                switch ($type) {
+                    case 'BelongsTo':
+                        $this->storeBelongsTo($for, $relationship, $data);
+                        break;
+                    case 'HasMany':
+                        $this->storeHasMany($for, $relationship, $data);
+                        break;
                 }
                 $for->save();
             }
         }
+    }
+
+    private function storeBelongsTo($for, $relationship, $data)
+    {
+        $related = call_user_func([$for, $relationship])
+            ->getRelated()
+            ->where('id', $data['id'] ?? null)
+            ->firstOr(function () use ($for, $relationship, $data) {
+                return call_user_func([$for, $relationship])
+                    ->getRelated()->create($data);
+            });
+        call_user_func([$for, $relationship])->associate($related);
+    }
+
+    private function storeHasMany($for, $relationship, $data)
+    {
+        $newItmes = [];
+        $related = call_user_func([$for, $relationship])->getRelated();
+        collect($data)->each(function ($item) use ($for, $relationship, $related, &$newItmes) {
+            $newItem = call_user_func([$related, 'where'], ['id' => $item['id'] ?? null])
+                ->firstOr(function () use ($for, $relationship, $item) {
+                    return call_user_func([$for, $relationship])
+                        ->getRelated()->create($item);
+                });
+
+            $newItem->fill($item);
+            $newItmes[] = $newItem;
+        });
+        $related->whereNotIn('id', collect($newItmes)->pluck('id'))->delete();
+        call_user_func([$for, $relationship])->saveMany($newItmes);
     }
 }

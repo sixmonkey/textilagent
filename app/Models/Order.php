@@ -10,12 +10,42 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
+use Stephenjude\DefaultModelSorting\Traits\DefaultOrderBy;
 
 class Order extends Model
 {
     use HasFactory;
     use HasRelationships;
     use Searchable;
+    use \App\Models\Traits\HasRelationships;
+    use DefaultOrderBy;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'contract',
+        'date',
+        'purchaser_pays',
+        'completed'
+    ];
+
+    /**
+     * the default sort order column
+     *
+     * @var string
+     */
+    protected static $orderByColumn = 'contract';
+
+
+    /**
+     * the default sort order direction
+     *
+     * @var string
+     */
+    protected static $orderByColumnDirection = 'desc';
 
     /**
      * The accessors to append to the model's array form.

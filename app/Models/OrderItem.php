@@ -12,6 +12,19 @@ class OrderItem extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'amount',
+        'typology',
+        'etd',
+        'price',
+        'provision'
+    ];
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var string[]
