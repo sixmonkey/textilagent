@@ -17,8 +17,8 @@ class CreateShipmentItemsTable extends Migration
     {
         Schema::create('shipment_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(OrderItem::class)->constrained('order_items')->cascadeOnDelete()->comment('related order item');
-            $table->foreignIdFor(Shipment::class)->constrained('shipments')->cascadeOnDelete()->comment('related shipment');
+            $table->foreignIdFor(OrderItem::class)->nullable()->constrained('order_items')->cascadeOnDelete()->comment('related order item');
+            $table->foreignIdFor(Shipment::class)->nullable()->constrained('shipments')->cascadeOnDelete()->comment('related shipment');
             $table->integer('amount')->comment('how much was shipped');
             $table->timestamps();
         });

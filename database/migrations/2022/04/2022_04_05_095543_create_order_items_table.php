@@ -18,8 +18,8 @@ class CreateOrderItemsTable extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(Order::class)->constrained('orders')->cascadeOnDelete();
-            $table->foreignIdFor(Unit::class)->constrained('units')->cascadeOnDelete();
+            $table->foreignIdFor(Order::class)->nullable()->constrained('orders')->cascadeOnDelete();
+            $table->foreignIdFor(Unit::class)->nullable()->constrained('units')->cascadeOnDelete();
             $table->string('description');
             $table->string('typology');
             $table->unsignedFloat('amount');

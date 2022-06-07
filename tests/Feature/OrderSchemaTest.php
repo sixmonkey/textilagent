@@ -29,7 +29,7 @@ class OrderSchemaTest extends TestCase
                 'id',
                 'contract',
                 'date',
-                'customer_pays',
+                'purchaser_pays',
                 'completed',
                 'agent_id',
                 'purchaser_id',

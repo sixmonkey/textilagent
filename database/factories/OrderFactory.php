@@ -19,7 +19,8 @@ class OrderFactory extends Factory
         return [
             'contract' => '#' . strtoupper($this->faker->randomLetter) . '-' . $this->faker->numberBetween(1111, 9999),
             'date' => $this->faker->date,
-            'customer_pays' => $this->faker->boolean(20),
+            'purchaser_pays' => $this->faker->boolean(20),
+            'payed' => $this->faker->boolean(20),
             'completed' => $this->faker->boolean,
             'agent_id' => User::all()->count() ? User::inRandomOrder()->first()->id : User::factory()->create()->id,
             'seller_id' => Company::all()->count() ? Company::inRandomOrder()->first()->id : Company::factory()->create()->id,
