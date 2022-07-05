@@ -10,7 +10,6 @@
     "require": {
         "php": "8.0",
         "ext-pdo": "*",
-        "brainmaestro/composer-git-hooks": "^2.8",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "http-interop/http-factory-guzzle": "^1.2",
@@ -32,6 +31,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
+        "brainmaestro/composer-git-hooks": "^2.8",
         "brianium/paratest": "^6.4",
         "ergebnis/composer-normalize": "^2.25",
         "facade/ignition": "^2.5",
