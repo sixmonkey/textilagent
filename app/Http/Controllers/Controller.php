@@ -15,6 +15,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends BaseController
 {
@@ -62,13 +63,16 @@ class Controller extends BaseController
      *
      * @param $method
      * @param $parameters
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response|JsonResource
      */
-    public function callAction($method, $parameters)
+    public function callAction($method, $parameters): Response|JsonResource
     {
-        foreach ($this->allowed_includes as &$allowed_include) {
-            $allowed_include = Str::camel($allowed_include);
-        }
+        $this->allowed_includes = collect($this->allowed_includes)
+            ->map(function ($item) {
+                return Str::camel($item);
+            })
+            ->toArray();
+
         return parent::callAction($method, $parameters);
     }
 
