@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\CurrenciesController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\ShipmentsController;
 use App\Http\Controllers\UnitsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
@@ -30,5 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
         'units' => UnitsController::class,
         'currencies' => CurrenciesController::class,
         'orders' => OrdersController::class,
+        'shipments' => ShipmentsController::class,
     ]);
 });
