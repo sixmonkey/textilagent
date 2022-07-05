@@ -21,11 +21,12 @@ class OrdersController extends Controller
     protected array $allowed_sorts = ['date'];
 
     /**
-     * allowed filters
+     * allowed fields
      *
      * @var array
      */
-    protected array $allowed_fields = [];
+    protected array $allowed_fields = [
+    ];
 
     /**
      * allowed includes of relationships
@@ -45,6 +46,11 @@ class OrdersController extends Controller
         'sub_agents.user'
     ];
 
+    /**
+     * allowed filters
+     *
+     * @var array
+     */
     protected array $allowed_filters = [
         'agent_id',
         'seller_id',

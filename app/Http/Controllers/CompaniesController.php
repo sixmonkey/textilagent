@@ -32,7 +32,11 @@ class CompaniesController extends Controller
      *
      * @var array
      */
-    protected array $allowed_fields = ['name', 'orders.contract'];
+    protected array $allowed_fields = [
+        'id',
+        'name',
+        'countries.name'
+    ];
 
     /**
      * allowed includes
