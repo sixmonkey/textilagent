@@ -94,6 +94,7 @@ class Controller extends BaseController
         $result = QueryBuilder::for($this->model)
             ->allowedSorts($this->allowed_sorts)
             ->allowedFilters($this->allowed_filters)
+            ->allowedFields($this->allowed_fields)
             ->allowedIncludes($this->allowed_includes);
 
         return
