@@ -15,7 +15,7 @@ class ShipmentSeeder extends Seeder
     public function run()
     {
         !Shipment::all()->count() && Shipment::factory()
-            ->count(660)
+            ->count(500)
             ->create();
     }
 }

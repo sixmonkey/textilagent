@@ -15,7 +15,7 @@ class SubAgentSeeder extends Seeder
     public function run()
     {
         !SubAgent::all()->count() && SubAgent::factory()
-            ->count(4400)
+            ->count(200)
             ->create();
     }
 }

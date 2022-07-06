@@ -15,7 +15,7 @@ class OrderSeeder extends Seeder
     public function run()
     {
         !Order::all()->count() && Order::factory()
-            ->count(550)
+            ->count(120)
             ->create();
     }
 }

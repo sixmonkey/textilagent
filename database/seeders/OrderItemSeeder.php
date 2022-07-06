@@ -15,7 +15,7 @@ class OrderItemSeeder extends Seeder
     public function run()
     {
         !OrderItem::all()->count() && OrderItem::factory()
-            ->count(2100)
+            ->count(500)
             ->create();
     }
 }
