@@ -45,6 +45,13 @@ class Controller extends BaseController
     protected array $allowed_filters = [];
 
     /**
+     * allowed scopes
+     *
+     * @var array
+     */
+    protected array $allowed_filter_scopes = [];
+
+    /**
      * allowed includes
      *
      * @var array
@@ -89,6 +96,10 @@ class Controller extends BaseController
 
         if (method_exists($this->model, 'scopeSearch')) {
             $this->allowed_filters[] = AllowedFilter::scope('search');
+        }
+
+        foreach ($this->allowed_filter_scopes as $scope) {
+            $this->allowed_filters[] = AllowedFilter::scope($scope);
         }
 
         $result = QueryBuilder::for($this->model)
@@ -280,7 +291,7 @@ class Controller extends BaseController
 
             $this->storeRelated($newItem, collect($item));
         });
-        $related->whereNotIn('id', collect($newItems)->pluck('id'))->delete();
+        call_user_func([$for, $relationship])->whereNotIn('id', collect($newItems)->pluck('id'))->delete();
         call_user_func([$for, $relationship])->saveMany($newItems);
     }
 }
