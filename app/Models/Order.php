@@ -17,7 +17,7 @@ class Order extends Model
     use HasFactory;
     use HasRelationships;
     use Searchable;
-    use \App\Models\Traits\HasRelationships;
+    use Traits\HasRelationships;
     use DefaultOrderBy;
 
     /**
@@ -51,7 +51,7 @@ class Order extends Model
      *
      * @var string
      */
-    protected static $orderByColumn = 'contract';
+    protected static string $orderByColumn = 'contract';
 
 
     /**
@@ -59,7 +59,7 @@ class Order extends Model
      *
      * @var string
      */
-    protected static $orderByColumnDirection = 'desc';
+    protected static string $orderByColumnDirection = 'desc';
 
     /**
      * The accessors to append to the model's array form.

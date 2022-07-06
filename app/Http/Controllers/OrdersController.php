@@ -26,6 +26,7 @@ class OrdersController extends Controller
      * @var array
      */
     protected array $allowed_fields = [
+        'id'
     ];
 
     /**
