@@ -11,7 +11,7 @@ class StoreShipmentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return false;
     }
@@ -21,10 +21,24 @@ class StoreShipmentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'invoice' => 'required|max:32',
+            'date' => 'required|date',
+            'shipment_items' => 'required|array|min:1',
+            'shipment_items.*.amount' => 'required|numeric|min:1',
+            'shipment_items.*.order_item.id' => 'required|exists:shipment_items,id',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function messages(): array
+    {
+        return [
+            'shipment_items.required' => 'Please give at least one shipped item'
         ];
     }
 }

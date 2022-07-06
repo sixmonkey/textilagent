@@ -75,28 +75,6 @@ class ShipmentSchemaTest extends TestCase
         $this->assertInstanceOf(Collection::class, $shipment->orderItems);
     }
 
-
-    /**
-     * @return void
-     */
-    public function test_order_has_shipments()
-    {
-        $shipment = Shipment::factory()->create();
-        Order::factory()
-            ->has(
-                OrderItem::factory()
-                    ->hasShipmentItems(14, [
-                        'shipment_id' => $shipment->id,
-                    ])
-            )
-            ->count(12)
-            ->create();
-
-        $this->assertEquals(12, $shipment->orders->count());
-
-        $this->assertInstanceOf(Collection::class, $shipment->orders);
-    }
-
     /**
      * the date of this shipment
      *

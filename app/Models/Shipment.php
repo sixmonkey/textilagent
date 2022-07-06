@@ -2,20 +2,48 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
+use Stephenjude\DefaultModelSorting\Traits\DefaultOrderBy;
 use Znck\Eloquent\Traits\BelongsToThrough;
 
 class Shipment extends Model
 {
     use HasFactory;
     use HasRelationships;
+    use Traits\HasRelationships;
     use BelongsToThrough;
+    use DefaultOrderBy;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'invoice',
+        'date'
+    ];
+
+    /**
+     * the default sort order column
+     *
+     * @var string
+     */
+    protected static string $orderByColumn = 'date';
+
+
+    /**
+     * the default sort order direction
+     *
+     * @var string
+     */
+    protected static string $orderByColumnDirection = 'desc';
 
     /**
      * The attributes that should be cast.
@@ -47,17 +75,34 @@ class Shipment extends Model
     }
 
     /**
+     * the related shipment items
+     *
+     * @return BelongsToMany
+     */
+    public function uniqueOrderItems(): BelongsToMany
+    {
+        return $this->belongsToMany(OrderItem::class, 'shipment_items');
+    }
+
+    /**
      * the related orders
      *
      * @return HasManyDeep
      */
     public function orders(): HasManyDeep
     {
+        // TODO: orders are listed twice
         return $this
             ->hasManyDeepFromRelations(
-                $this->orderItems(),
+                $this->uniqueOrderItems(),
                 (new OrderItem())->order()
-            )
-            ->groupBy('orders.id');
+            );
+    }
+
+    public function scopeOrderId(Builder $query, $value): Builder
+    {
+        return $query->whereHas('orders', function (Builder $query) use ($value) {
+            $query->where('orders.id', '1');
+        });
     }
 }

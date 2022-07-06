@@ -35,16 +35,18 @@ class ShipmentsController extends Controller
      * @var array|string[]
      */
     protected array $allowed_includes = [
-        'shipment_items'
+        'shipment_items',
+        'order_items',
+        'orders'
     ];
 
 
     /**
      * allowed filters
      *
-     * @var array|string[]
+     * @var array
      */
-    protected array $allowed_filters = [
-        'order_id'
+    protected array $allowed_filter_scopes = [
+        'order_id',
     ];
 }

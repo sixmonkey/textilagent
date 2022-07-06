@@ -13,6 +13,15 @@ class ShipmentItem extends Model
     use HasRelationships;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'amount'
+    ];
+
+    /**
      * the related order item
      *
      * @return BelongsTo
