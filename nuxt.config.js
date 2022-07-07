@@ -29,6 +29,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
+        '~/plugins/menuHelper.js',
         '~/plugins/vendor/vuetify-toast.js',
         '~/plugins/vendor/vee-validate.js',
     ],
@@ -59,12 +60,14 @@ export default {
         '@nuxt/content',
         // https://auth.nuxtjs.org/
         '@nuxtjs/auth-next',
+        // https://github.com/dword-design/nuxt-route-meta
+        'nuxt-route-meta',
     ],
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
         // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-        baseURL: '/',
+        baseURL: 'http://localhost:8888/api',
     },
 
     // PWA module configuration: https://go.nuxtjs.dev/pwa
