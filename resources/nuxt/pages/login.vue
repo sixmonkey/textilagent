@@ -1,5 +1,4 @@
 <template>
-  <v-main>
     <v-container fill-height>
       <v-layout align-center justify-center>
         <v-flex lg4 md5 sm8 xs12>
@@ -43,7 +42,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-  </v-main>
 </template>
 
 <script>
@@ -65,6 +63,7 @@ export default {
   methods: {
     async login() {
       if (!await this.$refs.form.validate()) return
+
       this.loading = true
       try {
         await this.$auth.loginWith('laravelSanctum', {
