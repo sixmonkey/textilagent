@@ -39,12 +39,13 @@
 
 <script>
 import _ from 'lodash'
+import {VAutocomplete, VCombobox} from 'vuetify/lib'
 import Input from './Input'
 import AutocompleteRow from '@/components/form/Autocomplete/Row'
 
 export default {
   name: 'AutocompleteComponent',
-  components: {AutocompleteRow},
+  components: {AutocompleteRow, VCombobox, VAutocomplete},
   extends: Input,
   inheritAttrs: true,
   props: {

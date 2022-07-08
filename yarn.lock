@@ -2952,7 +2952,7 @@ axios@^0.21.1:
   dependencies:
     follow-redirects "^1.14.0"
 
-axios@^0.26.1:
+axios@^0.26.0, axios@^0.26.1:
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"
   integrity sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==
@@ -7516,6 +7516,20 @@ kind-of@^6.0.0, kind-of@^6.0.2, kind-of@^6.0.3:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
+kitsu-core@^9.1.25:
+  version "9.1.25"
+  resolved "https://registry.yarnpkg.com/kitsu-core/-/kitsu-core-9.1.25.tgz#0bc88c74e9366444a91848f1c3f562c136c32edf"
+  integrity sha512-30G2gI4ZLJEjPohF1vp0j3AP6rnLXtsLftZAsgxCyJSDIWvNwY5EalX8POTfXe7p0hcaX+BYqklVWRoCaQCpLA==
+
+kitsu@^9.1.19:
+  version "9.1.25"
+  resolved "https://registry.yarnpkg.com/kitsu/-/kitsu-9.1.25.tgz#577cf091fba1a1b28385a2ee692e68d40cf4662e"
+  integrity sha512-Lx8CdecZmS4UF4roON8kCvZDQFMY/LkZOClfEFZjVW+O4fK8Abm45OMGAD+5wbkF0ClBmA+BJ6v1bULdeUCLpQ==
+  dependencies:
+    axios "^0.26.0"
+    kitsu-core "^9.1.25"
+    pluralize "^8.0.0"
+
 kleur@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
@@ -8597,6 +8611,14 @@ num2fraction@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/num2fraction/-/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"
   integrity sha512-Y1wZESM7VUThYY+4W+X4ySH2maqcA+p7UR+w8VWNWVAd6lwuXXWz/w/Cz43J/dI2I+PS6wD5N+bJUF+gjWvIqg==
+
+nuxt-jsonapi@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/nuxt-jsonapi/-/nuxt-jsonapi-0.0.6.tgz#1e18d03543ff58c4ed55d33b229a330d1f99cd07"
+  integrity sha512-NXE5b9h9CiufCF8S6sdxkezqc0NUlhdxeG19eRamQpTtJIwD2+Bw0shvpLCZs0gJdyO6qAn5dlpRtxBlpwYLwQ==
+  dependencies:
+    chalk "^4.1.2"
+    kitsu "^9.1.19"
 
 nuxt-route-meta@^2.3.4:
   version "2.3.4"
