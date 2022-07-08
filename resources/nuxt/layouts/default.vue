@@ -23,7 +23,7 @@
           </v-btn>
 
           <v-btn icon>
-            <ui-avatar :background="false" :name="$auth.user.name" size="30px"/>
+            <app-avatar :background="false" :name="$auth.user.name" size="30px"/>
           </v-btn>
 
           <v-btn :text="true" icon @click="logout">
