@@ -64,6 +64,9 @@ export default {
         '@nuxtjs/auth-next',
         // https://github.com/dword-design/nuxt-route-meta
         'nuxt-route-meta',
+        // https://github.com/patrickcate/nuxt-jsonapi
+        'nuxt-jsonapi',
+
     ],
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -71,6 +74,14 @@ export default {
         // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
         baseURL: 'http://localhost:8888/api',
         credentials: true,
+    },
+
+    // https://github.com/patrickcate/nuxt-jsonapi
+    jsonApi: {
+        baseURL: 'http://localhost:8888/api',
+        axiosOptions: {
+            withCredentials: true,
+        }
     },
 
     // PWA module configuration: https://go.nuxtjs.dev/pwa
