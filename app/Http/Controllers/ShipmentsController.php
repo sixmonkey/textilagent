@@ -19,7 +19,8 @@ class ShipmentsController extends Controller
      * @var array
      */
     protected array $allowed_sorts = [
-        'date'
+        'date',
+        'invoice'
     ];
 
     /**
@@ -37,9 +38,10 @@ class ShipmentsController extends Controller
     protected array $allowed_includes = [
         'shipment_items',
         'order_items',
-        'orders'
+        'orders',
+        'seller',
+        'purchaser',
     ];
-
 
     /**
      * allowed filters
@@ -48,5 +50,15 @@ class ShipmentsController extends Controller
      */
     protected array $allowed_filter_scopes = [
         'order_id',
+    ];
+
+    /**
+     * allowed filters
+     *
+     * @var array
+     */
+    protected array $allowed_filters = [
+        'seller_id',
+        'purchaser_id',
     ];
 }

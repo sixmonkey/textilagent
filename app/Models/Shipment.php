@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
@@ -99,10 +100,36 @@ class Shipment extends Model
             );
     }
 
+    /**
+     * @param Builder $query
+     * @param $value
+     * @return Builder
+     */
     public function scopeOrderId(Builder $query, $value): Builder
     {
         return $query->whereHas('orders', function (Builder $query) use ($value) {
             $query->where('orders.id', '1');
         });
     }
+
+    /**
+     * the related seller
+     *
+     * @return BelongsTo
+     */
+    public function seller(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'seller_id');
+    }
+
+    /**
+     * the related purchaser
+     *
+     * @return BelongsTo
+     */
+    public function purchaser(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'purchaser_id');
+    }
+
 }

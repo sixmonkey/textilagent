@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -57,6 +58,12 @@ class Controller extends BaseController
      * @var array
      */
     protected array $allowed_includes = [];
+    /**
+     * allowed includes
+     *
+     * @var array
+     */
+    protected array $allowed_counts = [];
 
     /**
      * allowed fields
@@ -94,17 +101,26 @@ class Controller extends BaseController
     {
         $this->authorize('viewAny', $this->model);
 
+        $allowed_filters = [];
         if (method_exists($this->model, 'scopeSearch')) {
-            $this->allowed_filters[] = AllowedFilter::scope('search');
+            $allowed_filters[] = AllowedFilter::scope('search');
+        }
+
+        foreach ($this->allowed_filters as $filter) {
+            $allowed_filters[] = AllowedFilter::exact($filter);
         }
 
         foreach ($this->allowed_filter_scopes as $scope) {
-            $this->allowed_filters[] = AllowedFilter::scope($scope);
+            $allowed_filters[] = AllowedFilter::scope($scope);
+        }
+
+        foreach ($this->allowed_filter_scopes as $count) {
+            $this->allowed_includes[] = AllowedInclude::count($count);
         }
 
         $result = QueryBuilder::for($this->model)
             ->allowedSorts($this->allowed_sorts)
-            ->allowedFilters($this->allowed_filters)
+            ->allowedFilters($allowed_filters)
             ->allowedFields($this->allowed_fields)
             ->allowedIncludes($this->allowed_includes);
 
