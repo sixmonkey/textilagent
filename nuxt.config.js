@@ -153,5 +153,12 @@ export default {
     build: {
         transpile: ['vee-validate', 'vue-underscore', 'vuetify/lib'],
     },
+
+    // Build Configuration: https://go.nuxtjs.dev/config-build
+    generate: {
+        dir: 'public',
+        exclude: [
+            /^\/.+$/ // exclude anything but home (/) because we leave any routing to laravel
+        ]
     }
 }

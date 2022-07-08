@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::fallback(function () {
+    if (\Illuminate\Support\Facades\File::exists(public_path('index.html'))) {
+        echo file_get_contents(public_path('index.html'));
+    }
 });
