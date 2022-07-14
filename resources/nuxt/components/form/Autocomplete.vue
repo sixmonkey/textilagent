@@ -107,7 +107,6 @@ export default {
           )
         })
         .catch((err) => {
-          console.error(err)
           this.$toast.error(err)
         })
         .finally(() => (this.isLoading = false))
@@ -119,9 +118,7 @@ export default {
           ? {id: null, name: this.value}
           : this.value
 
-      console.dir(val)
-
-      this.$emit('input', this.value)
+      this.$emit('input', val)
     },
   },
 }
