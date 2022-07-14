@@ -1,6 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 import menus from './resources/nuxt/config/menus'
 import app from './resources/nuxt/config/app'
+import 'dotenv/config';
 
 export default {
     // Target: https://go.nuxtjs.dev/config-target
@@ -32,6 +33,7 @@ export default {
         '~/plugins/menuHelper.js',
         '~/plugins/colorHelper.js',
         '~/plugins/pluralHelper.js',
+        '~/plugins/datatableToJsonApi.js',
         '~/plugins/vendor/vuetify-toast.js',
         '~/plugins/vendor/vee-validate.js',
     ],
@@ -146,6 +148,10 @@ export default {
     publicRuntimeConfig: {
         menus,
         app,
+        page: {
+            default_size: process.env.PAGE_SIZE_DEFAULT ?? 25,
+            max_size: process.env.PAGE_SIZE_MAX ?? 100,
+        }
     },
     privateRuntimeConfig: {},
 

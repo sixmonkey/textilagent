@@ -280,4 +280,7 @@ return [
         SubagentResource::class  => User::class,
         OrderitemResource::class => Orderitem::class,
     ],
+
+    'page_size_default' => env('PAGE_SIZE_DEFAULT', 25),
+    'page_size_max' => env('PAGE_SIZE_MAX', 100),
 ];
