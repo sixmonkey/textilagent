@@ -31,7 +31,7 @@
           </v-btn>
         </v-app-bar>
 
-        <v-navigation-drawer :mini-variant="drawer" app dark permanent clipped>
+        <v-navigation-drawer id="sidebar" :mini-variant="drawer" app dark permanent clipped>
           <div v-for="(submenu, key) in $menus.main" :key="key">
             <v-list nav dense>
               <v-list-item
@@ -54,13 +54,6 @@
       <v-main>
         <nuxt/>
       </v-main>
-
-      <v-footer dark padless>
-        <v-col class="text-center text-caption text-no-wrap" cols="12">
-          &copy;{{ new Date().getFullYear() }} —
-          <strong>{{ $config.app.title }}</strong>
-        </v-col>
-      </v-footer>
     </v-app>
     <vue-toast-group/>
   </v-app>
