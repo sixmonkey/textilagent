@@ -2,6 +2,7 @@
 
   <v-row
     ref="holder"
+    v-resize="onResize"
     class="fill-height primary overflow-hidden"
   >
     <v-col>
@@ -18,6 +19,7 @@
         :options.sync="options"
         :server-items-length="meta?.total ?? 0"
         class="elevation-1"
+        :height="tableHeight"
         fixed-header
       >
         <template #top>
@@ -80,6 +82,7 @@ export default {
   },
   data() {
     return {
+      tableHeight: 'auto',
       itemsPerPageOptions: [10, ..._.range(25, this.$config.page.max_size, 25), parseInt(this.$config.page.max_size)],
       shipments: [],
       meta: {
@@ -141,6 +144,16 @@ export default {
 
     this.shipments = [...a.data]
     this.meta = a.meta
+    this.options.itemsPerPage = this.meta.per_page
+    this.$refs.table.$el.querySelector('.v-data-table__wrapper').scroll(0, 0)
+  },
+  methods: {
+    onResize() {
+      this.tableHeight = document.getElementById('sidebar').offsetHeight
+        - this.$refs.table.$el.querySelector('.table--header').offsetHeight
+        - this.$refs.table.$el.querySelector('.v-data-footer').offsetHeight
+        - 1
+    }
   },
   watch: {
     '$route.query': '$fetch'
