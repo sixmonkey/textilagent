@@ -8,6 +8,7 @@ use App\Models\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Stephenjude\DefaultModelSorting\Traits\DefaultOrderBy;
 
 class Company extends Model
 {
@@ -15,6 +16,14 @@ class Company extends Model
     use HasCountry;
     use Searchable;
     use HasRelationships;
+    use DefaultOrderBy;
+
+    /**
+     * the default sort order column
+     *
+     * @var string
+     */
+    protected static string $orderByColumn = 'name';
 
     /**
      * The attributes that should be hidden for serialization.

@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Stephenjude\DefaultModelSorting\Traits\DefaultOrderBy;
 
 class User extends AuthUser
 {
@@ -20,6 +21,14 @@ class User extends AuthUser
     use HasCountry;
     use Searchable;
     use HasRelationships;
+    use DefaultOrderBy;
+
+    /**
+     * the default sort order column
+     *
+     * @var string
+     */
+    protected static string $orderByColumn = 'name';
 
     /**
      * The attributes that are mass assignable.
