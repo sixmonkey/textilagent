@@ -50,6 +50,7 @@ class ShipmentsController extends Controller
      */
     protected array $allowed_filter_scopes = [
         'order_id',
+        'date_between',
     ];
 
     /**

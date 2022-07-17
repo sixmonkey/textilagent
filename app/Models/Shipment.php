@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 use Stephenjude\DefaultModelSorting\Traits\DefaultOrderBy;
@@ -110,6 +111,17 @@ class Shipment extends Model
         return $query->whereHas('orders', function (Builder $query) use ($value) {
             $query->where('orders.id', '1');
         });
+    }
+
+    /**
+     * @param Builder $query
+     * @param $start
+     * @param $end
+     * @return Builder
+     */
+    public function scopeDateBetween(Builder $query, $start, $end): Builder
+    {
+        return $query->whereBetween('date', [Carbon::parse($start), Carbon::parse($end)]);
     }
 
     /**
