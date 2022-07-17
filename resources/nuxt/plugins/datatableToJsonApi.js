@@ -20,4 +20,18 @@ export default ({app}, inject) => {
       include: options.include
     })
   })
+  inject('queryToDatatable', function () {
+    const sorts = app.context?.route?.query?.sort ? app.context?.route?.query?.sort.split() : []
+    const sortDesc = []
+    const sortBy = sorts.map((sort) => {
+      sortDesc.push(sort.startsWith('-'))
+      return sort.replace(/^-/, '')
+    })
+    return {
+      sortBy,
+      sortDesc,
+      itemsPerPage: app.context?.route?.query?.page?.size ?? parseInt(app.$config.page.default_size),
+      page: app.context?.route?.query?.page?.number ?? 1
+    }
+  })
 }

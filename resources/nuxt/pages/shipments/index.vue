@@ -129,7 +129,7 @@ export default {
           align: 'right',
         },
       ],
-      filter: {
+      filter: this.$route.query?.filter ?? {
         seller_id: null,
         purchaser_id: null,
         date_between: [],
@@ -148,21 +148,19 @@ export default {
 
     this.shipments = [...a.data]
     this.meta = a.meta
-    this.options.itemsPerPage = this.meta.per_page
+    this.options = this.$queryToDatatable();
+
     this.$refs.table.$el.querySelector('.v-data-table__wrapper').scroll(0, 0)
   },
-  methods: {
-    onResize() {
-      this.tableHeight = document.getElementById('sidebar').offsetHeight
-        - this.$refs.table.$el.querySelector('.table--header').offsetHeight
-        - this.$refs.table.$el.querySelector('.v-data-footer').offsetHeight
-        - 1
+  watch: {
+    '$route.query': '$fetch',
+    filter: {
+      handler() {
+        this.options.page = 1
+      },
+      deep: true
     }
   },
-  watch: {
-    '$route.query': '$fetch'
-  },
-  fetchOnServer: false,
   mounted() {
     this.$watch(vm => [vm.filter, vm.options], val => {
       this.$router.push({
