@@ -2,11 +2,11 @@
   <div class="text-no-wrap text-truncate">
     <app-avatar
       v-if="avatars"
-      :name="returnObject ? input.item.name : input.item"
+      :name="returnObject ? input.item[itemText ?? 'name'] : input.item"
       :size="20"
       class="mr-2"
     />
-    {{ returnObject ? input.item.name : input.item }}
+    {{ returnObject ? input.item[itemText ?? 'name'] : input.item }}
   </div>
 </template>
 
@@ -21,6 +21,10 @@ export default {
     returnObject: {
       required: true,
       type: Boolean,
+    },
+    itemText: {
+      type: String,
+      default: () => null,
     },
     avatars: {
       type: Boolean,

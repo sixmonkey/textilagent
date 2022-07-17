@@ -25,7 +25,7 @@
         <template #top>
           <v-container fluid>
             <v-row class="table--header">
-              <v-col md="4">
+              <v-col md="3">
                 <app-form-autocomplete
                   v-model="filter.seller_id"
                   avatars
@@ -38,7 +38,7 @@
                   clearable
                 />
               </v-col>
-              <v-col md="4">
+              <v-col md="3">
                 <app-form-autocomplete
                   v-model="filter.purchaser_id"
                   avatars
@@ -51,10 +51,22 @@
                   clearable
                 />
               </v-col>
-              <v-col md="4">
+              <v-col md="3">
                 <app-form-datepicker
                   v-model="filter.date_between"
                   label="Month"
+                />
+              </v-col>
+              <v-col md="3">
+                <app-form-autocomplete
+                  v-model="filter.order_id"
+                  entity="order"
+                  item-text="contract"
+                  item-value="id"
+                  label="Order"
+                  name="order"
+                  return-id
+                  clearable
                 />
               </v-col>
             </v-row>
@@ -138,16 +150,18 @@ export default {
     }
   },
   async fetch() {
-    const a = await this.$jsonApi.get('/shipments', {
-      include: 'seller,purchaser,shipment_items_count',
-      page: {size: this.$config.page.default_size},
-      ...this.$route.query
-    }).then(shipments => {
-      return shipments
-    })
+    const result = await this.$jsonApi
+      .get('/shipments', {
+        include: 'seller,purchaser,shipment_items_count',
+        page: {size: this.$config.page.default_size},
+        ...this.$route.query
+      })
+      .then(result => {
+        return result
+      })
 
-    this.shipments = [...a.data]
-    this.meta = a.meta
+    this.shipments = [...result.data]
+    this.meta = result.meta
     this.options = this.$queryToDatatable();
 
     this.$refs.table.$el.querySelector('.v-data-table__wrapper').scroll(0, 0)

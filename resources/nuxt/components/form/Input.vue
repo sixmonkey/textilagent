@@ -76,8 +76,8 @@ input[type='date']::-webkit-calendar-picker-indicator {
   text-align: right;
 }
 
-.v-input--is-readonly .v-input__slot::before,
-.v-input--is-readonly .v-input__slot::after {
+.v-input--is-readonly:not(.border) .v-input__slot::before,
+.v-input--is-readonly:not(.border) .v-input__slot::after {
   border-style: none !important;
 }
 

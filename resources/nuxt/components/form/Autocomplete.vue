@@ -22,6 +22,7 @@
       <template #selection="input">
         <autocomplete-row
           :return-object="$attrs['return-object'] !== undefined || $attrs['return-id'] !== undefined"
+          :item-text="$attrs['item-text']"
           :avatars="avatars"
           :input="input"
         />
@@ -29,6 +30,7 @@
       <template #item="input">
         <autocomplete-row
           :return-object="$attrs['return-object'] !== undefined || $attrs['return-id'] !== undefined"
+          :item-text="$attrs['item-text']"
           :avatars="avatars"
           :input="input"
         />
@@ -84,6 +86,8 @@ export default {
     },
     localValue: {
       get() {
+        if (this.$attrs['return-id'] !== undefined)
+          return parseInt(this.value)
         return this.value
       },
       set(localValue) {
@@ -102,8 +106,8 @@ export default {
         .then((res) => {
           this.entries = res.data.data.map((item) =>
             this.$attrs['return-object'] !== undefined || this.$attrs['return-id'] !== undefined
-              ? _.pick(item, 'id', 'name')
-              : item.name
+              ? _.pick(item, 'id', this.$attrs['item-text'] ?? 'name')
+              : item[this.$attrs['item-text'] ?? 'name']
           )
         })
         .catch((err) => {

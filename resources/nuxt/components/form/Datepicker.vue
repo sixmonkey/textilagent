@@ -15,6 +15,7 @@
         :prepend-icon="prependIcon"
         readonly
         clearable
+        class="border"
         v-bind="attrs"
         v-on="on"
       ></v-text-field>
@@ -26,7 +27,7 @@
       range
       type="month"
       v-bind="$attrs"
-      v-on="$on"
+      v-on="$listeners"
     >
       <v-spacer></v-spacer>
       <v-btn
@@ -52,7 +53,7 @@ export default {
   name: "DatepickerComponent",
   props: {
     value: {
-      type: Array,
+      type: [Array, String],
       required: false,
       default: () => null,
     },
