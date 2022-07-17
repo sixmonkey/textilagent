@@ -51,6 +51,12 @@
                   clearable
                 />
               </v-col>
+              <v-col md="4">
+                <app-form-datepicker
+                  v-model="filter.date_between"
+                  label="Month"
+                />
+              </v-col>
             </v-row>
           </v-container>
         </template>
@@ -125,12 +131,10 @@ export default {
       ],
       filter: {
         seller_id: null,
-        purchaser_id: null
+        purchaser_id: null,
+        date_between: [],
       },
-      options: {
-        page: this.$route.page?.number ?? 1,
-        itemsPerPage: this.page?.size ?? this.$config.page.default_size,
-      }
+      options: this.$queryToDatatable()
     }
   },
   async fetch() {

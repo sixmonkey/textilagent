@@ -119,9 +119,14 @@ class Shipment extends Model
      * @param $end
      * @return Builder
      */
-    public function scopeDateBetween(Builder $query, $start, $end): Builder
+    public function scopeDateBetween(Builder $query, $start, $end = null): Builder
     {
-        return $query->whereBetween('date', [Carbon::parse($start), Carbon::parse($end)]);
+        if ($end === null) {
+            return $query->where('date', Carbon::parse($start));
+        }
+        $range = [Carbon::parse($start), Carbon::parse($end)];
+        sort($range);
+        return $query->whereBetween('date', $range);
     }
 
     /**
