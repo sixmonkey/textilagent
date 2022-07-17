@@ -109,7 +109,7 @@ class Shipment extends Model
     public function scopeOrderId(Builder $query, $value): Builder
     {
         return $query->whereHas('orders', function (Builder $query) use ($value) {
-            $query->where('orders.id', '1');
+            $query->where('orders.id', $value);
         });
     }
 
