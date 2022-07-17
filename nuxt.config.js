@@ -131,8 +131,14 @@ export default {
             return require('qs').parse(query)
         },
         stringifyQuery: (query) => {
-            const r = require('qs').stringify(query)
-            return r ? '?' + r : ''
+            return require('qs').stringify(query, {
+                arrayFormat: 'comma',
+                addQueryPrefix: true,
+                encode: false,
+                sort(a, b) {
+                    return a.localeCompare(b);
+                }
+            })
         },
     },
     auth: {
