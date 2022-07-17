@@ -172,6 +172,15 @@ export default {
       immediate: true,
       deep: true
     })
-  }
+  },
+  methods: {
+    onResize() {
+      this.tableHeight = document.getElementById('sidebar').offsetHeight
+        - this.$refs.table.$el.querySelector('.table--header').offsetHeight
+        - this.$refs.table.$el.querySelector('.v-data-footer').offsetHeight
+        - 1
+    }
+  },
+  fetchOnServer: false,
 }
 </script>
