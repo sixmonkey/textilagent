@@ -12,7 +12,7 @@
       <v-text-field
         v-model="localValue"
         :label="label"
-        :prepend-icon="prepedIcon"
+        :prepend-icon="prependIcon"
         readonly
         clearable
         v-bind="attrs"
